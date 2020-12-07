@@ -1,0 +1,21 @@
+@import "../utilities/variables";
+
+.listApplicationsWrapper {
+    background: $color2;
+    margin: 2rem 0;
+    h1 {
+        margin: 2rem 0;
+        text-align: center;
+    }
+    .listApplications {
+        padding: 2rem;
+        background: rgb(241, 241, 241);
+        .listWrapper {
+            margin-bottom: 1rem;
+        }
+        .btn {
+            margin-right: .5rem;
+            text-transform: capitalize;
+        }
+    }
+}
