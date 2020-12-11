@@ -1,0 +1,24 @@
+.appMissingWarning {
+    font-size: 3rem;
+    text-align: center;
+    margin: 100px 0;
+}
+.addApplication {
+    position: absolute;
+    bottom: 5%;
+    right: 5%;
+    width: 125px;
+    height: 125px;
+    padding: 0 !important;
+    border-radius: 50% !important;
+    line-height: 1rem !important;
+    overflow: hidden;
+    .icon {
+        font-size: 12rem;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        -webkit-transform: translate(-50%, -50%);
+    }
+}

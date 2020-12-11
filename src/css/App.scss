@@ -1,5 +1,10 @@
 @import "utilities/variables";
 
+//Global styles
+* {
+    font-family: $font;
+}
+
 .freedom-forever-crud-app {
     height: 100vh;
     width: 100vw;
@@ -21,4 +26,37 @@
     .input.form-group {
         color: $text-color;
     }
+    .loading {
+        text-align: center;
+        text-transform: uppercase;
+        letter-spacing: 3px;
+        .loading-icon-wrapper {
+            max-width: 15%;
+            margin: 6rem auto 3rem;
+            .loading-icon {
+                max-width: 100%;
+                height: auto;
+                
+            }
+        }
+    }
 }
+
+@keyframes flickerAnimation {
+    from {opacity: 0;}
+  }
+  @-o-keyframes flickerAnimation{
+    from {opacity: 0;}
+  }
+  @-moz-keyframes flickerAnimation{
+    from {opacity: 0;}
+  }
+  @-webkit-keyframes flickerAnimation{
+    from {opacity: 0;}
+  }
+  .animate-flicker {
+     -webkit-animation: flickerAnimation 1s infinite alternate;
+     -moz-animation: flickerAnimation 1s infinite alternate;
+     -o-animation: flickerAnimation 1s infinite alternate;
+      animation: flickerAnimation 1s infinite alternate;
+  }

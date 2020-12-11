@@ -1,8 +1,9 @@
 import React from 'react';
 import Form from 'react-bootstrap/Form';
 
-const States = ({onChange}) => {
+const States = ({name, onChange, value}) => {
     const states = {
+        "Select a State" : "Select a State",
         "AL": "Alabama",
         "AK": "Alaska",
         "AS": "American Samoa",
@@ -65,10 +66,9 @@ const States = ({onChange}) => {
     }
 
     return (
-        <Form.Group controlId="states">
+        <Form.Group controlId={name}>
             <Form.Label>State</Form.Label>
-            <Form.Control as="select" onChange={onChange}>
-                <option value="">Select a state</option>
+            <Form.Control as="select" onChange={onChange} value={value}>
                 {Object.keys(states).map((key, i) =>
                     <option value={key} key={i}>{key}</option>
                 )}

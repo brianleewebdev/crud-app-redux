@@ -1,9 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
+import logo from '../assets/img/ff-loading-icon-copy.png';
 import styles from '../css/module/list_applications.module.scss';
 import { deleteApplication } from '../redux/actions';
 
@@ -19,34 +19,43 @@ const mapDispatchToProps = dispatch => {
 
 const ConnectedList = (props) => {
     //console.log(props)
-    return (
-        <div className={styles.listApplicationsWrapper}>
-            <Container>
-                <Row>
-                    <Col>
-                        <h1>Your Current Loan Applications</h1>
-                        {props.applications.map(app =>
-                            <div className={styles.listApplications} key={app.id}>
-                                <div className={styles.listWrapper}>
-                                    <p>Applied on</p>
-                                    <div className="name">{app.content.first_name + ' ' + app.content.last_name}</div>
-                                    <div className="phone">{app.content.phone}</div>
-                                    <div className="email">{app.content.email}</div>
-                                    <div className="address">
-                                        <span>{app.content.address + ' ' + app.content.city + ', ' + app.content.state + ' ' + app.content.zip}</span>
-                                    </div>
-                                </div>
-                                <Button variant="primary" className={styles.btn}>edit application</Button>
-                                <Button variant="primary" className={styles.btn} onClick={() => props.deleteApplication(app.id)}>delete application</Button>
+    if (props) {
+        return (
+            <Col>
+                <h1>Your Current Loan Applications</h1>
+                {props.applications.map((app, index) =>
+                    <div className={styles.listApplications} key={index}>
+                        <div className={styles.listWrapper}>
+                            <div className="name">{app.entry.first_name + ' ' + app.entry.last_name}</div>
+                            <div className="phone">{app.entry.phone}</div>
+                            <div className="email">{app.entry.email}</div>
+                            <div className="address">
+                                <span>{app.entry.address + ' ' + app.entry.city + ', ' + app.entry.state + ' ' + app.entry.zip}</span>
                             </div>
-                        )}
-                    </Col>
-                </Row>
-            </Container>
-        </div>
-    )
+                            <div className="date">Applied on {app.timestamp}</div>
+                        </div>
+                        <Button variant="primary" className={styles.btn} onClick={() => props.editCurrentApplication(app.id)}>edit application</Button>
+                        <Button variant="primary" className={styles.btn} onClick={() => props.deleteApplication(app.id)}>delete application</Button>
+                    </div>
+                )}
+            </Col>
+        )
+    } else {
+        return (
+            <Row>
+                <Col>
+                    <div className="loading">
+                        <div className="loading-icon-wrapper">
+                            <img className="loading-icon animate-flicker" src={logo} alt="Please wait while we fetch your data!" />
+                        </div>
+                        <span>loading...</span>
+                    </div>
+                </Col>
+            </Row>
+        )
+    }
 }
 
-const List = connect(mapStateToProps, mapDispatchToProps)(ConnectedList);
+const Applications = connect(mapStateToProps, mapDispatchToProps)(ConnectedList);
 
-export default List;
+export default Applications;
