@@ -64,6 +64,12 @@ body,
             }
         }
     }
+    .missing-applications {
+        span {
+            display: block;
+            font-size: 2rem;
+        }
+    }
 
     // Form (general styles)
     .error {

@@ -29,16 +29,16 @@ class List extends React.Component {
         const results = this.props.applications.filter(app => app.entry.first_name.toLowerCase().includes(searchTerm) || app.entry.last_name.toLowerCase().includes(searchTerm))
         console.log(results)
         // if searchTerm contains a string or integer and the filtered list does not contain any matching terms, return false
-        if(e.target.value.length !== 0 && results.length === 0) {
-            this.setState({searchTextMatch: false})
-        // if searchTerm contains a string or integer and the filtered list contains a matching term, return true
-        } else if(e.target.value.length !==0 && results.length !== 0) {
-            this.setState({searchTextMatch: true})
-        // if searchTerm is empty, return true to see all applications
-        } else if(e.target.value.length === 0) {
-            this.setState({searchTextMatch: true})
+        if (e.target.value.length !== 0 && results.length === 0) {
+            this.setState({ searchTextMatch: false })
+            // if searchTerm contains a string or integer and the filtered list contains a matching term, return true
+        } else if (e.target.value.length !== 0 && results.length !== 0) {
+            this.setState({ searchTextMatch: true })
+            // if searchTerm is empty, return true to see all applications
+        } else if (e.target.value.length === 0) {
+            this.setState({ searchTextMatch: true })
         }
-        this.setState({searchResults: results})
+        this.setState({ searchResults: results })
     }
 
     render() {
@@ -46,12 +46,20 @@ class List extends React.Component {
             return (
                 <Row>
                     {
-                        this.props.applications.length !== 0 ? 
-                            <Applications editCurrentApplication={this.props.editCurrentApplication} handleSearch={this.handleSearch} results={this.state.searchResults} searchTextMatch={this.state.searchTextMatch} /> 
-                            : 
-                            <div className={styles.appMissingWarning}>You haven't applied for any loans yet! Add a new loan application below!</div>
+                        this.props.applications.length !== 0 ?
+                            <Applications editCurrentApplication={this.props.editCurrentApplication} handleSearch={this.handleSearch} results={this.state.searchResults} searchTextMatch={this.state.searchTextMatch} />
+                            :
+                            <div className="missing-applications">
+                                <div className="loading">
+                                    <div className="loading-icon-wrapper">
+                                        <img className="loading-icon animate-flicker" src={logo} alt="Please wait while we fetch your data!" />
+                                    </div>
+                                    <span>you have not applied for any loans!</span>
+                                    <span>please click the add button below to begin!</span>
+                                </div>
+                            </div>
                     }
-                    <Button className={styles.btn} onClick={this.props.toggleLoaded}>
+                    <Button className={styles.btn} onClick={this.props.toggleLoaded} title="Add new loan application">
                         <div className={styles.icon}>&#43;</div>
                     </Button>
                 </Row>

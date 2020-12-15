@@ -31,7 +31,7 @@ const ConnectedList = (props) => {
                     handleSearch={props.handleSearch}
                 />
                 {props.searchTextMatch === false ? 
-                <div className={styles.noMatchingTerm}>
+                <div className="missing-applications">
                     <div className="loading">
                         <div className="loading-icon-wrapper">
                             <img className="loading-icon animate-flicker" src={logo} alt="Please wait while we fetch your data!" />
