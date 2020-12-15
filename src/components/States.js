@@ -1,7 +1,7 @@
 import React from 'react';
 import Form from 'react-bootstrap/Form';
 
-const States = ({name, onChange, value}) => {
+const States = ({name, onChange, value, error, errorClass}) => {
     const states = {
         "Select a State" : "Select a State",
         "AL": "Alabama",
@@ -68,7 +68,14 @@ const States = ({name, onChange, value}) => {
     return (
         <Form.Group controlId={name}>
             <Form.Label>State</Form.Label>
-            <Form.Control as="select" onChange={onChange} value={value}>
+            {error ?
+                Object.entries(error).map(([k, v], index) =>
+                    k === name ? <span className='error' key={index}>{v}</span> : null
+                )
+                :
+                null
+            }
+            <Form.Control as="select" onChange={onChange} value={value} style={error ? error[errorClass] ? {border: '1px solid red'} : null : null}>
                 {Object.keys(states).map((key, i) =>
                     <option value={key} key={i}>{key}</option>
                 )}

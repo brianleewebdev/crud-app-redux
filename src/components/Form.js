@@ -29,10 +29,12 @@ class LoanForm extends React.Component {
             social_security: '',
             gross_annual_income: '',
             currentId: '',
-            isLoaded: false
+            isLoaded: false,
+            errors: undefined
         }
         this.handleInputChange = this.handleInputChange.bind(this)
         this.handleSubmit = this.handleSubmit.bind(this)
+        this.handleValidation = this.handleValidation.bind(this)
     }
 
     componentDidMount = () => {
@@ -62,19 +64,115 @@ class LoanForm extends React.Component {
 
     handleInputChange = e => {
         let key = ''
-        if (e.target.id === 'states') {
-            key = 'state'
-        } else {
-            key = e.target.name
-        }
+        e.target.id === 'state' ? key='state' : key = e.target.name
         const value = e.target.value
+        
         this.setState({
             [key]: value
         })
     }
 
+    handleValidation = () => {
+        let errors = {}
+        let formValid = true
+
+        if (this.state.first_name === '') {
+            errors['first_name'] = "What's your name?"
+            formValid = false
+        } else {
+            if(!this.state.first_name.match(/^[a-zA-Z]+$/)) {
+                errors['first_name'] = 'Only letters'
+                formValid = false
+            }
+        }
+        
+        if (this.state.last_name === '') {
+            errors['last_name'] = 'How about your last name?'
+            formValid = false
+        } else {
+            if(!this.state.last_name.match(/^[a-zA-Z]+$/)) {
+                errors['last_name'] = 'Only letters'
+                formValid = false
+            }
+        }
+
+        if (this.state.address === '') {
+            errors['address'] = 'You forgot to fill out your address!'
+            formValid = false
+        }
+
+        if (this.state.city === '') {
+            errors['city'] = 'Which city do you live in?'
+            formValid = false
+        } else {
+            if(!this.state.city.match(/^[a-zA-Z\s]+$/)) {
+                errors['city'] = 'Only letters'
+                formValid = false
+            }
+        }
+
+        if (this.state.state === '') {
+            errors['state'] = 'Please choose the state you reside in.'
+            formValid = false
+        } 
+
+        if (this.state.zip === '') {
+            errors['zip'] = 'Please provide your zip code.'
+            formValid = false
+        }  else {
+            if(!this.state.zip.match(/^[0-9\b]+$/)) {
+                errors['zip'] = 'Numbers only'
+                formValid = false
+            }
+        }
+
+        if (this.state.phone === '') {
+            errors['phone'] = 'What if we need to contact you?'
+            formValid = false
+        }
+
+        if (this.state.email === '') {
+            errors['email'] = 'We require an email address!'
+            formValid = false
+        }
+
+        if (this.state.dob_month === '' || this.state.dob_day === '' || this.state.dob_year === '') {
+            errors['dob'] = 'Please provide your birth date.'
+            formValid = false
+        } else {
+            if(!this.state.dob_month.match(/^[0-9\b]+$/) || !this.state.dob_day.match(/^[0-9\b]+$/) || !this.state.dob_year.match(/^[0-9\b]+$/)) {
+                errors['dob'] = 'Numbers only'
+                formValid = false
+            }
+        }
+
+        if (this.state.social_security === '') {
+            errors['social_security'] = 'Please provide the last four digits of your Social Security.'
+            formValid = false
+        } else {
+            if(!this.state.social_security.match(/^[0-9\b]+$/)) {
+                errors['social_security'] = 'Numbers only'
+                formValid = false
+            }
+        }
+
+        if (this.state.gross_annual_income === '') {
+            errors['gross_annual_income'] = 'Please provide your pre-tax annual income.'
+            formValid = false
+        } else {
+            if(!this.state.gross_annual_income.match(/^[-,0-9]+$/)) {
+                errors['gross_annual_income'] = 'Numbers only'
+                formValid = false
+            }
+        }
+
+        this.setState({ errors: errors })
+        return formValid
+    }
+
     handleSubmit = e => {
         e.preventDefault()
+        this.handleValidation()
         const {
             first_name,
             last_name,
@@ -91,182 +189,213 @@ class LoanForm extends React.Component {
             gross_annual_income,
             currentId
         } = this.state
-        if (this.props.applications.some(a => a.id === this.props.currentAppId)) {
-            this.props.updateApplication({
-                first_name,
-                last_name,
-                address,
-                city,
-                state,
-                zip,
-                phone,
-                email,
-                dob_day,
-                dob_month,
-                dob_year,
-                social_security,
-                gross_annual_income,
-                currentId
-            })
-        } else {
-            this.props.addApplication({
-                first_name,
-                last_name,
-                address,
-                city,
-                state,
-                zip,
-                phone,
-                email,
-                dob_day,
-                dob_month,
-                dob_year,
-                social_security,
-                gross_annual_income
-            })
+        if (this.handleValidation()) {
+            if (this.props.applications.some(a => a.id === this.props.currentAppId)) {
+                this.props.updateApplication({
+                    first_name,
+                    last_name,
+                    address,
+                    city,
+                    state,
+                    zip,
+                    phone,
+                    email,
+                    dob_day,
+                    dob_month,
+                    dob_year,
+                    social_security,
+                    gross_annual_income,
+                    currentId
+                })
+            } else {
+                this.props.addApplication({
+                    first_name,
+                    last_name,
+                    address,
+                    city,
+                    state,
+                    zip,
+                    phone,
+                    email,
+                    dob_day,
+                    dob_month,
+                    dob_year,
+                    social_security,
+                    gross_annual_income
+                })
+            }
+            this.props.toggleLoaded()
         }
-        this.props.toggleLoaded()
     }
 
     render() {
         if (this.state.isLoaded === true) {
             return (
-                <Form>
+                <Form className='loan-application-form'>
                     <Row>
                         <Col>
                             <FormInput
                                 label="First Name"
                                 name="first_name"
                                 type="text"
-                                placeholder="First Name"
+                                placeholder="John"
                                 required
-                                className="input text mb-3 first-name"
+                                className='first_name'
                                 onChange={this.handleInputChange}
                                 value={this.state.first_name}
+                                error={this.state.errors}
+                                errorClass={'first_name'}
                             />
                             <FormInput
                                 label="Last Name"
                                 name="last_name"
                                 type="text"
-                                placeholder="Last Name"
+                                placeholder="Doe"
                                 required
-                                className="input text last-name"
+                                className='last_name'
                                 onChange={this.handleInputChange}
                                 value={this.state.last_name}
+                                error={this.state.errors}
+                                errorClass={'last_name'}
                             />
                             <FormInput
                                 label="Address (No P.O. Boxes)"
                                 name="address"
                                 type="text"
-                                placeholder="Street"
                                 required
-                                className="input text address"
+                                className='address'
                                 onChange={this.handleInputChange}
                                 value={this.state.address}
+                                error={this.state.errors}
+                                errorClass={'address'}
                             />
                             <FormInput
                                 label="City"
                                 name="city"
                                 type="text"
-                                placeholder="City"
                                 required
-                                className="input text state"
+                                className='city'
                                 onChange={this.handleInputChange}
                                 value={this.state.city}
+                                error={this.state.errors}
+                                errorClass={'city'}
                             />
-                            <States name={'states'} onChange={this.handleInputChange} value={this.state.state} />
+                            <States
+                                name={'state'}
+                                className='select states'
+                                onChange={this.handleInputChange}
+                                value={this.state.state}
+                                error={this.state.errors}
+                                errorClass={'state'}
+                            />
                             <FormInput
                                 label="Zip"
                                 name="zip"
                                 type="text"
-                                placeholder="Zip"
                                 required
-                                className="input text zip"
+                                className='zip'
                                 onChange={this.handleInputChange}
                                 value={this.state.zip}
+                                error={this.state.errors}
+                                errorClass={'zip'}
                             />
-                        </Col>
-                        <Col>
                             <FormInput
                                 label="Phone"
                                 name="phone"
-                                type="text"
-                                placeholder="Phone"
+                                type="tel"
                                 required
-                                className="input text phone"
+                                className='phone'
                                 onChange={this.handleInputChange}
                                 value={this.state.phone}
+                                error={this.state.errors}
+                                errorClass={'phone'}
+                                strlimit='10'
                             />
                             <FormInput
                                 label="Email"
                                 name="email"
                                 type="email"
-                                placeholder="Email"
+                                placeholder="johndoe@freedomforever.com"
                                 required
-                                className="input email"
+                                className='email'
                                 onChange={this.handleInputChange}
                                 value={this.state.email}
+                                error={this.state.errors}
+                                errorClass={'email'}
                             />
                             <Label>Date of Birth</Label>
+                            {this.state.errors ?
+                                Object.entries(this.state.errors).map(([k, v], index) =>
+                                    k === 'dob' ? 
+                                        <span className='error' key={index}>{v}</span> 
+                                        : null
+                                )
+                                : null
+                            }
                             <FormInput
                                 label="Month"
                                 name="dob_month"
                                 type="text"
-                                placeholder="Month"
                                 required
-                                className="input text dob-month"
+                                className='dob-month'
                                 onChange={this.handleInputChange}
                                 strlimit='2'
                                 value={this.state.dob_month}
+                                error={this.state.errors}
+                                errorClass={'dob'}
                             />
                             <FormInput
                                 label="Day"
                                 name="dob_day"
                                 type="text"
-                                placeholder="Day"
                                 required
-                                className="input text dob-day"
+                                className='dob-day'
                                 onChange={this.handleInputChange}
                                 strlimit='2'
                                 value={this.state.dob_day}
+                                error={this.state.errors}
+                                errorClass={'dob'}
                             />
                             <FormInput
                                 label="Year"
                                 name="dob_year"
                                 type="text"
-                                placeholder="Year"
                                 required
-                                className="input text dob-year"
+                                className='dob-year'
                                 onChange={this.handleInputChange}
                                 strlimit='4'
                                 value={this.state.dob_year}
+                                error={this.state.errors}
+                                errorClass={'dob'}
                             />
                             <FormInput
-                                label="Last 4 digits of your Social Security"
+                                label="Social Security (last 4 digits)"
                                 name="social_security"
                                 type="text"
-                                placeholder="XXXX"
                                 required
-                                className="input text social-security"
+                                className='social-security'
                                 onChange={this.handleInputChange}
                                 strlimit='4'
                                 value={this.state.social_security}
+                                error={this.state.errors}
+                                errorClass={'social_security'}
                             />
                             <FormInput
                                 label="Pre-tax annual income"
                                 name="gross_annual_income"
                                 type="nutextmber"
-                                placeholder="Income"
                                 required
-                                className="input text gross-annual-income"
+                                className='gross-annual-income'
                                 onChange={this.handleInputChange}
                                 value={this.state.gross_annual_income}
+                                error={this.state.errors}
+                                errorClass={'gross_annual_income'}
                             />
                         </Col>
                     </Row>
                     <Row>
                         <Col>
-                            <Button variant="primary" size="lg" type="submit" onClick={this.handleSubmit}>
+                            <Button size="lg" type="submit" className='submit' onClick={e => this.handleSubmit(e)} block>
                                 {
                                     this.props.applications.some(a => a.id === this.props.currentAppId) ?
                                         'Edit Application'

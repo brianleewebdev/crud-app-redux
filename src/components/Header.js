@@ -1,10 +1,12 @@
 import React from 'react';
 
 const Header = () => {
-    return(
+    return (
         <header>
-            <div>get approved in seconds!</div>
-            <p>Please fill out this credit application to apply for your new solar loan</p>
+            <div className="header-container">
+                <h1>get approved in seconds!</h1>
+                <p>Please fill out this credit application to apply for your new solar loan</p>
+            </div>
         </header>
     )
 }

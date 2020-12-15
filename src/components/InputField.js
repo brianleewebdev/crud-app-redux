@@ -12,20 +12,27 @@ const FormInput = ({
     error,
     label,
     strlimit,
+    errorClass,
     ...props
 }) => {
     return (
         <Form.Group controlId={name}>
-            {error && <p>{error}</p>}
             <Form.Label>{label}</Form.Label>
-            <Form.Control 
-                name={name} 
+            {error ?
+                Object.entries(error).map(([k, v], index) =>
+                    k === name ? <span className='error' key={index}>{v}</span> : null
+                )
+                :
+                null
+            }
+            <Form.Control
+                name={name}
                 type={type}
                 placeholder={placeholder}
                 onChange={onChange}
                 value={value}
-                className={className}
-                style={error && { border: 'solid 1px red' }}
+                className={`${className} input`}
+                style={error ? error[errorClass] ? {border: '1px solid red'} : null : null}
                 maxLength={strlimit}
             />
         </Form.Group>
@@ -39,7 +46,7 @@ FormInput.defaultProps = {
 FormInput.propTypes = {
     name: PropTypes.string.isRequired,
     type: PropTypes.string,
-    placeholder: PropTypes.string.isRequired,
+    placeholder: PropTypes.string,
     className: PropTypes.string,
     value: PropTypes.any,
     onChange: PropTypes.func.isRequired

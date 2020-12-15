@@ -5,8 +5,8 @@ const initialState = {
 }
 
 const rootReducer = (state = initialState, action) => {
-    console.log(action)
-    console.log(state)
+    //console.log(action)
+    //console.log(state)
     switch (action.type) {
         case ADD_APPLICATION:
             let today = new Date()

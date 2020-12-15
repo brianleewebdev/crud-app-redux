@@ -1,0 +1,12 @@
+@import "../utilities/variables";
+
+.searchBar {
+    width: 100%;
+    padding: .5rem;
+    margin-bottom: 1rem;
+    border: 1px solid $green1;
+    border-radius: 5px;
+    &:active,
+    &:focus-within,
+    &:hover {border: 1px solid $green2 !important;}
+}

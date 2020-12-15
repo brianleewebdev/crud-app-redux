@@ -1,9 +1,11 @@
+@import "../utilities/variables";
+
 .appMissingWarning {
     font-size: 3rem;
     text-align: center;
     margin: 100px 0;
 }
-.addApplication {
+.btn {
     position: absolute;
     bottom: 5%;
     right: 5%;
@@ -13,6 +15,13 @@
     border-radius: 50% !important;
     line-height: 1rem !important;
     overflow: hidden;
+    background: $green1 !important;
+    border: none !important; 
+    &:hover,
+    &:active,
+    &:focus {
+        background: $green2 !important;
+    }
     .icon {
         font-size: 12rem;
         position: absolute;

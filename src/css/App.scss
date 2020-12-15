@@ -9,23 +9,28 @@
     height: 100vh;
     width: 100vw;
     background: $background-color;
-    header {
-        background: $color1;
-        text-align: center;
-        color: $color3;
-        div {
-            text-transform: uppercase;
-            font-size: 2rem;
-            padding: 1rem 0;
-        }
-        p {
-            padding-bottom: 1rem;
-            font-size: 1rem;
-        }
-    }
     .input.form-group {
-        color: $text-color;
+        color: $text-dark;
     }
+    // Header styles
+    header {
+        margin-bottom: 2rem;
+        text-align: center;
+        color: $text-dark;
+        .header-container {
+            font-size: 2rem;
+            padding: 2rem 0;
+            h1 {
+                text-transform: uppercase;
+            }
+            p {
+                padding: 0;
+                margin: 0;
+                font-size: 1rem;
+            }
+        }
+    }
+    // Loading Icon 
     .loading {
         text-align: center;
         text-transform: uppercase;
@@ -36,7 +41,30 @@
             .loading-icon {
                 max-width: 100%;
                 height: auto;
-                
+            }
+        }
+    }
+
+    // Form (general styles)
+    .error {
+        display: block;
+        color: $error;
+        font-size: .8rem;
+        margin: 0;
+        padding: 0;
+    }
+    .loan-application-form {
+        width: 60%;
+        padding: 3rem;
+        background: #ffffff;
+        margin: 0 auto;
+        .submit.btn.btn-primary {
+            background: $green1;
+            border: none;
+            &:hover,
+            &:active,
+            &:focus {
+                background: $green2;
             }
         }
     }
