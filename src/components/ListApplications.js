@@ -25,14 +25,20 @@ const ConnectedList = (props) => {
         // if the results array is populated, map the results array else map global store
         props.results.length !== 0 ? currentMappedEntry = props.results : currentMappedEntry = props.applications
         return (
-            <Col>
+            <Col className={styles.listContainer}>
                 <h1>Your Current Loan Applications</h1>
                 <Search 
                     handleSearch={props.handleSearch}
                 />
                 {props.searchTextMatch === false ? 
                 <div className={styles.noMatchingTerm}>
-                    <h2>We couldn't find any matching applications!</h2>
+                    <div className="loading">
+                        <div className="loading-icon-wrapper">
+                            <img className="loading-icon animate-flicker" src={logo} alt="Please wait while we fetch your data!" />
+                        </div>
+                        <span>Uh oh,</span>
+                        <span>We couldn't find any matching applications!</span>
+                    </div>
                 </div>
                 :
                 currentMappedEntry.map((app, index) =>

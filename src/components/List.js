@@ -25,7 +25,7 @@ class List extends React.Component {
     }
 
     handleSearch = (e) => {
-        let searchTerm = e.target.value
+        let searchTerm = e.target.value.toLowerCase()
         const results = this.props.applications.filter(app => app.entry.first_name.toLowerCase().includes(searchTerm) || app.entry.last_name.toLowerCase().includes(searchTerm))
         console.log(results)
         // if searchTerm contains a string or integer and the filtered list does not contain any matching terms, return false

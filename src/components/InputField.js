@@ -16,7 +16,7 @@ const FormInput = ({
     ...props
 }) => {
     return (
-        <Form.Group controlId={name}>
+        <Form.Group controlId={name} className={name}>
             <Form.Label>{label}</Form.Label>
             {error ?
                 Object.entries(error).map(([k, v], index) =>

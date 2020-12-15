@@ -5,24 +5,41 @@
     font-family: $font;
 }
 
+html,
+body,
+#root {
+    height: 100%;
+    background: $background-color;
+}
+
 .freedom-forever-crud-app {
-    height: 100vh;
+    height: 100%;
     width: 100vw;
     background: $background-color;
-    .input.form-group {
-        color: $text-dark;
+
+    .form-group {
+        input {
+            background: $input-bg;
+        }
     }
+
     // Header styles
     header {
         margin-bottom: 2rem;
         text-align: center;
         color: $text-dark;
+        background: rgb(246, 180, 31);
+        background: linear-gradient(90deg, rgba(246, 180, 31, 1) 12%, rgba(255, 206, 45, 1) 74%, rgba(148, 201, 80, 1) 100%);
         .header-container {
             font-size: 2rem;
             padding: 2rem 0;
+
             h1 {
                 text-transform: uppercase;
+                font-weight: 800;
+                letter-spacing: 1px;
             }
+
             p {
                 padding: 0;
                 margin: 0;
@@ -30,14 +47,17 @@
             }
         }
     }
+
     // Loading Icon 
     .loading {
         text-align: center;
         text-transform: uppercase;
         letter-spacing: 3px;
+
         .loading-icon-wrapper {
             max-width: 15%;
             margin: 6rem auto 3rem;
+
             .loading-icon {
                 max-width: 100%;
                 height: auto;
@@ -53,14 +73,37 @@
         margin: 0;
         padding: 0;
     }
+
     .loan-application-form {
         width: 60%;
         padding: 3rem;
-        background: #ffffff;
+        background: #fff;
         margin: 0 auto;
+
+        .row {
+            .col {
+                &>label.form-label {
+                    display: block;
+                }
+            }
+        }
+
+        .dob-wrapper {
+            display: flex;
+            flex-flow: row nowrap;
+            justify-content: space-between;
+            align-content: space-between;
+
+            .form-group {
+                flex-shrink: 3;
+                flex-basis: 8rem;
+            }
+        }
+
         .submit.btn.btn-primary {
             background: $green1;
             border: none;
+
             &:hover,
             &:active,
             &:focus {
@@ -71,20 +114,50 @@
 }
 
 @keyframes flickerAnimation {
-    from {opacity: 0;}
-  }
-  @-o-keyframes flickerAnimation{
-    from {opacity: 0;}
-  }
-  @-moz-keyframes flickerAnimation{
-    from {opacity: 0;}
-  }
-  @-webkit-keyframes flickerAnimation{
-    from {opacity: 0;}
-  }
-  .animate-flicker {
-     -webkit-animation: flickerAnimation 1s infinite alternate;
-     -moz-animation: flickerAnimation 1s infinite alternate;
-     -o-animation: flickerAnimation 1s infinite alternate;
-      animation: flickerAnimation 1s infinite alternate;
-  }
+    from {
+        opacity: 0;
+    }
+}
+
+@-o-keyframes flickerAnimation {
+    from {
+        opacity: 0;
+    }
+}
+
+@-moz-keyframes flickerAnimation {
+    from {
+        opacity: 0;
+    }
+}
+
+@-webkit-keyframes flickerAnimation {
+    from {
+        opacity: 0;
+    }
+}
+
+.animate-flicker {
+    -webkit-animation: flickerAnimation 1s infinite alternate;
+    -moz-animation: flickerAnimation 1s infinite alternate;
+    -o-animation: flickerAnimation 1s infinite alternate;
+    animation: flickerAnimation 1s infinite alternate;
+}
+
+@media screen and (max-width: 768px) {
+    h1 {
+        font-size: 2rem;
+    }
+
+    .freedom-forever-crud-app {
+        .loan-application-form {
+            width: 100%;
+
+            .dob-wrapper {
+                .form-group {
+                    flex-basis: 5rem;
+                }
+            }
+        }
+    }
+}

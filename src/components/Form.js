@@ -64,9 +64,9 @@ class LoanForm extends React.Component {
 
     handleInputChange = e => {
         let key = ''
-        e.target.id === 'state' ? key='state' : key = e.target.name
+        e.target.id === 'state' ? key = 'state' : key = e.target.name
         const value = e.target.value
-        
+
         this.setState({
             [key]: value
         })
@@ -80,17 +80,17 @@ class LoanForm extends React.Component {
             errors['first_name'] = "What's your name?"
             formValid = false
         } else {
-            if(!this.state.first_name.match(/^[a-zA-Z]+$/)) {
+            if (!this.state.first_name.match(/^[a-zA-Z]+$/)) {
                 errors['first_name'] = 'Only letters'
                 formValid = false
             }
         }
-        
+
         if (this.state.last_name === '') {
             errors['last_name'] = 'How about your last name?'
             formValid = false
         } else {
-            if(!this.state.last_name.match(/^[a-zA-Z]+$/)) {
+            if (!this.state.last_name.match(/^[a-zA-Z]+$/)) {
                 errors['last_name'] = 'Only letters'
                 formValid = false
             }
@@ -105,7 +105,7 @@ class LoanForm extends React.Component {
             errors['city'] = 'Which city do you live in?'
             formValid = false
         } else {
-            if(!this.state.city.match(/^[a-zA-Z\s]+$/)) {
+            if (!this.state.city.match(/^[a-zA-Z\s]+$/)) {
                 errors['city'] = 'Only letters'
                 formValid = false
             }
@@ -114,13 +114,13 @@ class LoanForm extends React.Component {
         if (this.state.state === '') {
             errors['state'] = 'Please choose the state you reside in.'
             formValid = false
-        } 
+        }
 
         if (this.state.zip === '') {
             errors['zip'] = 'Please provide your zip code.'
             formValid = false
-        }  else {
-            if(!this.state.zip.match(/^[0-9\b]+$/)) {
+        } else {
+            if (!this.state.zip.match(/^[0-9\b]+$/)) {
                 errors['zip'] = 'Numbers only'
                 formValid = false
             }
@@ -129,6 +129,11 @@ class LoanForm extends React.Component {
         if (this.state.phone === '') {
             errors['phone'] = 'What if we need to contact you?'
             formValid = false
+        } else {
+            if (!this.state.phone.match(/^[0-9\b]+$/)) {
+                errors['phone'] = 'Numbers only'
+                formValid = false
+            }
         }
 
         if (this.state.email === '') {
@@ -140,7 +145,7 @@ class LoanForm extends React.Component {
             errors['dob'] = 'Please provide your birth date.'
             formValid = false
         } else {
-            if(!this.state.dob_month.match(/^[0-9\b]+$/) || !this.state.dob_day.match(/^[0-9\b]+$/) || !this.state.dob_year.match(/^[0-9\b]+$/)) {
+            if (!this.state.dob_month.match(/^[0-9\b]+$/) || !this.state.dob_day.match(/^[0-9\b]+$/) || !this.state.dob_year.match(/^[0-9\b]+$/)) {
                 errors['dob'] = 'Numbers only'
                 formValid = false
             }
@@ -150,7 +155,7 @@ class LoanForm extends React.Component {
             errors['social_security'] = 'Please provide the last four digits of your Social Security.'
             formValid = false
         } else {
-            if(!this.state.social_security.match(/^[0-9\b]+$/)) {
+            if (!this.state.social_security.match(/^[0-9\b]+$/)) {
                 errors['social_security'] = 'Numbers only'
                 formValid = false
             }
@@ -160,7 +165,7 @@ class LoanForm extends React.Component {
             errors['gross_annual_income'] = 'Please provide your pre-tax annual income.'
             formValid = false
         } else {
-            if(!this.state.gross_annual_income.match(/^[-,0-9]+$/)) {
+            if (!this.state.gross_annual_income.match(/^[-,0-9]+$/)) {
                 errors['gross_annual_income'] = 'Numbers only'
                 formValid = false
             }
@@ -326,48 +331,50 @@ class LoanForm extends React.Component {
                             <Label>Date of Birth</Label>
                             {this.state.errors ?
                                 Object.entries(this.state.errors).map(([k, v], index) =>
-                                    k === 'dob' ? 
-                                        <span className='error' key={index}>{v}</span> 
+                                    k === 'dob' ?
+                                        <span className='error' key={index}>{v}</span>
                                         : null
                                 )
                                 : null
                             }
-                            <FormInput
-                                label="Month"
-                                name="dob_month"
-                                type="text"
-                                required
-                                className='dob-month'
-                                onChange={this.handleInputChange}
-                                strlimit='2'
-                                value={this.state.dob_month}
-                                error={this.state.errors}
-                                errorClass={'dob'}
-                            />
-                            <FormInput
-                                label="Day"
-                                name="dob_day"
-                                type="text"
-                                required
-                                className='dob-day'
-                                onChange={this.handleInputChange}
-                                strlimit='2'
-                                value={this.state.dob_day}
-                                error={this.state.errors}
-                                errorClass={'dob'}
-                            />
-                            <FormInput
-                                label="Year"
-                                name="dob_year"
-                                type="text"
-                                required
-                                className='dob-year'
-                                onChange={this.handleInputChange}
-                                strlimit='4'
-                                value={this.state.dob_year}
-                                error={this.state.errors}
-                                errorClass={'dob'}
-                            />
+                            <div className="dob-wrapper">
+                                <FormInput
+                                    label="Month"
+                                    name="dob_month"
+                                    type="text"
+                                    required
+                                    className='dob-month'
+                                    onChange={this.handleInputChange}
+                                    strlimit='2'
+                                    value={this.state.dob_month}
+                                    error={this.state.errors}
+                                    errorClass={'dob'}
+                                />
+                                <FormInput
+                                    label="Day"
+                                    name="dob_day"
+                                    type="text"
+                                    required
+                                    className='dob-day'
+                                    onChange={this.handleInputChange}
+                                    strlimit='2'
+                                    value={this.state.dob_day}
+                                    error={this.state.errors}
+                                    errorClass={'dob'}
+                                />
+                                <FormInput
+                                    label="Year"
+                                    name="dob_year"
+                                    type="text"
+                                    required
+                                    className='dob-year'
+                                    onChange={this.handleInputChange}
+                                    strlimit='4'
+                                    value={this.state.dob_year}
+                                    error={this.state.errors}
+                                    errorClass={'dob'}
+                                />
+                            </div>
                             <FormInput
                                 label="Social Security (last 4 digits)"
                                 name="social_security"
@@ -403,6 +410,7 @@ class LoanForm extends React.Component {
                                         'Submit Application'
                                 }
                             </Button>
+                            {this.props.applications.length !== 0 ? <Button size="lg" onClick={this.props.toggleLoaded} className="submit" block>My Applications</Button> : null}
                         </Col>
                     </Row>
                 </Form>

@@ -1,5 +1,6 @@
 {
   "name": "freedom-forever-crud",
+  "homepage": "https://zkr.wfm.mybluehost.me/ffcrud",
   "version": "0.1.0",
   "private": true,
   "dependencies": {

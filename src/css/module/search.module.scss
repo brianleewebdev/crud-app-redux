@@ -8,5 +8,9 @@
     border-radius: 5px;
     &:active,
     &:focus-within,
-    &:hover {border: 1px solid $green2 !important;}
+    &:focus,
+    &:hover {
+        border: 1px solid $yellow2 !important;
+        outline: none;
+    }
 }
